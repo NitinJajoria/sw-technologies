@@ -1,0 +1,142 @@
+"use client";
+import Link from "next/link";
+import { Mail, Phone, MapPin, ArrowUp } from "lucide-react";
+import { useLenis } from "lenis/react";
+import Image from "next/image";
+
+const footerLinks = {
+  "Quick Links": [
+    { label: "Home", href: "/" },
+    { label: "About", href: "/about" },
+    { label: "Services", href: "/services" },
+    { label: "Contact", href: "/contact" },
+  ],
+  Services: [
+    { label: "Web Design", href: "/services" },
+    { label: "Web Dev", href: "/services" },
+    { label: "E-Commerce", href: "/services" },
+    { label: "SEO & Marketing", href: "/services" },
+  ],
+};
+
+const socials = [
+  { icon: "/images/socialicons/twitter.png", href: "#", label: "Twitter" },
+  { icon: "/images/socialicons/linkedin.png", href: "#", label: "LinkedIn" },
+  { icon: "/images/socialicons/instagram.png", href: "#", label: "Instagram" },
+  { icon: "/images/socialicons/facebook.png", href: "#", label: "Facebook" },
+];
+
+const contact = [
+  { icon: Mail, text: "hello@swtech.dev" },
+  { icon: Phone, text: "+91 98765 43210" },
+  { icon: MapPin, text: "Delhi, India" },
+];
+
+export default function Footer() {
+  const lenis = useLenis();
+
+  const scrollToTop = () => {
+    if (lenis) {
+      lenis.scrollTo(0, { duration: 1.5 });
+    } else {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
+
+  return (
+    <footer className="relative z-10 bg-dark">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10">
+          {/* Brand */}
+          <div className="col-span-2 sm:col-span-2 lg:col-span-1">
+            <Link href="/" className="group w-fit block mb-4">
+              <span className="font-display font-bold text-2xl tracking-tight leading-none">
+                <span className="bg-gradient-to-r from-brand-400 to-brand-600 bg-clip-text text-transparent group-hover:from-brand-300 group-hover:to-brand-500 transition-all duration-300">
+                  SW Technologies
+                </span>
+              </span>
+            </Link>
+            <p className="text-white/80 text-sm leading-relaxed mb-6">
+              Building modern digital experiences for businesses and startups.
+              Fast, beautiful, results-driven.
+            </p>
+            {/* Socials */}
+            <div className="flex items-center gap-2">
+              {socials.map(({ icon, href, label }) => (
+                <a
+                  key={label}
+                  href={href}
+                  aria-label={label}
+                  className="w-10 h-10 flex items-center justify-center transition-all duration-300 hover:scale-110 group/icon"
+                >
+                  <div className="w-full h-full relative">
+                    <Image
+                      src={icon}
+                      alt={label}
+                      fill
+                      sizes="40px"
+                      className="object-contain"
+                    />
+                  </div>
+                </a>
+              ))}
+            </div>
+          </div>
+
+          {/* Nav columns */}
+          {Object.entries(footerLinks).map(([title, links]) => (
+            <div key={title}>
+              <h3 className="font-display font-semibold text-white text-sm mb-4">
+                {title}
+              </h3>
+              <ul className="space-y-2.5">
+                {links.map(({ label, href }) => (
+                  <li key={label}>
+                    <Link
+                      href={href}
+                      className="text-white/80 text-sm hover:text-brand-400 transition-colors duration-200 relative group w-fit block"
+                    >
+                      {label}
+                      <span className="absolute -bottom-0.5 left-0 h-px bg-brand-400 transition-all duration-300 w-0 group-hover:w-full" />
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+
+          {/* Contact */}
+          <div>
+            <h3 className="font-display font-semibold text-white text-sm mb-4">
+              Contact
+            </h3>
+            <ul className="space-y-3">
+              {contact.map(({ icon: Icon, text }) => (
+                <li
+                  key={text}
+                  className="flex items-center gap-3 text-white/80 text-sm"
+                >
+                  <Icon size={14} className="text-brand-400 shrink-0" />
+                  {text}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        {/* Bottom bar */}
+        <div className="mt-10 sm:mt-12 pt-6 border-t border-dark-border flex flex-col sm:flex-row items-center justify-between gap-4">
+          <p className="text-white/80 text-sm text-center sm:text-left">
+            © 2026 SW Technologies. All rights reserved.
+          </p>
+          <button
+            onClick={scrollToTop}
+            className="flex items-center gap-2 bg-brand-500 hover:bg-brand-600 text-white text-sm font-medium px-6 h-12 rounded-full transition-colors duration-200 shadow-lg shadow-brand-500/20 cursor-pointer"
+          >
+            Back to Top <ArrowUp size={16} />
+          </button>
+        </div>
+      </div>
+    </footer>
+  );
+}
