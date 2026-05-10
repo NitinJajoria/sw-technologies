@@ -180,6 +180,8 @@ const PageRevealer = ({
                     fill
                     sizes="(max-width: 768px) 256px, 320px"
                     className="object-contain"
+                    priority
+                    loading="eager"
                   />
                 </motion.div>
 

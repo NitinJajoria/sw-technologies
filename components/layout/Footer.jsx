@@ -1,8 +1,11 @@
 "use client";
+import { useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Mail, Phone, MapPin, ArrowUp } from "lucide-react";
 import { useLenis } from "lenis/react";
 import Image from "next/image";
+import { toast } from "react-hot-toast";
 
 const footerLinks = {
   "Quick Links": [
@@ -34,6 +37,30 @@ const contact = [
 
 export default function Footer() {
   const lenis = useLenis();
+  const pathname = usePathname();
+  const [email, setEmail] = useState("");
+
+  if (pathname === "/login" || pathname === "/register") return null;
+
+  const handleSubscribe = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await fetch("/api/newsletter/subscribe", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+      const data = await res.json();
+      if (res.ok) {
+        toast.success(data.message || "Subscribed successfully!");
+        setEmail("");
+      } else {
+        toast.error(data.error || data.message || "Subscription failed");
+      }
+    } catch (err) {
+      toast.error("Something went wrong. Please try again.");
+    }
+  };
 
   const scrollToTop = () => {
     if (lenis) {
@@ -106,11 +133,11 @@ export default function Footer() {
           ))}
 
           {/* Contact */}
-          <div>
+          <div className="col-span-2 lg:col-span-1">
             <h3 className="font-display font-semibold text-white text-sm mb-4">
               Contact
             </h3>
-            <ul className="space-y-3">
+            <ul className="space-y-3 mb-6">
               {contact.map(({ icon: Icon, text }) => (
                 <li
                   key={text}
@@ -121,6 +148,26 @@ export default function Footer() {
                 </li>
               ))}
             </ul>
+
+            <h3 className="font-display font-semibold text-white text-sm mb-4">
+              Newsletter
+            </h3>
+            <form onSubmit={handleSubscribe} className="relative max-w-sm">
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Enter your email"
+                className="w-full bg-white/5 border border-white/10 rounded-full px-4 py-2.5 pr-24 sm:pr-28 text-sm text-white placeholder-white/40 focus:outline-none focus:border-brand-500 transition-all"
+                required
+              />
+              <button
+                type="submit"
+                className="absolute right-1 top-1 bottom-1 bg-brand-500 hover:bg-brand-600 text-white text-[10px] sm:text-xs font-bold px-3 sm:px-4 rounded-full transition-colors shadow-lg shadow-brand-500/10 cursor-pointer"
+              >
+                Subscribe
+              </button>
+            </form>
           </div>
         </div>
 

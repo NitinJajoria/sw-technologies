@@ -75,9 +75,9 @@ export default function ContactSection() {
 
       const data = await response.json();
 
-      if (data.success) {
+      if (response.ok) {
         setStatus("success");
-        setMessage("Thanks! We'll get back to you within 24 hours.");
+        setMessage(data.message || "Thanks! We'll get back to you within 24 hours.");
         toast.success("Message sent successfully!");
         setFields({
           name: "",
@@ -88,7 +88,7 @@ export default function ContactSection() {
           message: "",
         });
       } else {
-        throw new Error(data.message || "Failed to send message");
+        throw new Error(data.error || data.message || "Failed to send message");
       }
     } catch (error) {
       console.error("Submission error:", error);

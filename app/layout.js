@@ -3,6 +3,8 @@ import "./globals.css";
 import { LenisProvider } from "@/components/layout/LenisProvider";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import { AuthProvider } from "@/components/AuthProvider";
+import QuoteModal from "@/components/QuoteModal";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const sora = Sora({ subsets: ["latin"], variable: "--font-sora" });
@@ -25,21 +27,24 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${inter.variable} ${sora.variable}`}>
       <body className="bg-dark text-gray-100 font-sans antialiased">
-        <LenisProvider>
-          <Toaster
-            position="top-right"
-            toastOptions={{
-              style: {
-                background: "#0f172a",
-                color: "#fff",
-                border: "1px solid rgba(255,255,255,0.1)",
-              },
-            }}
-          />
-          <Navbar />
-          <main>{children}</main>
-          <Footer />
-        </LenisProvider>
+        <AuthProvider>
+          <LenisProvider>
+            <Toaster
+              position="top-right"
+              toastOptions={{
+                style: {
+                  background: "#0f172a",
+                  color: "#fff",
+                  border: "1px solid rgba(255,255,255,0.1)",
+                },
+              }}
+            />
+            <Navbar />
+            <main>{children}</main>
+            <Footer />
+            <QuoteModal />
+          </LenisProvider>
+        </AuthProvider>
       </body>
     </html>
   );

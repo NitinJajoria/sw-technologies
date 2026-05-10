@@ -5,8 +5,10 @@ import Link from "next/link";
 import Image from "next/image";
 import { services } from "@/lib/data";
 import AnimatedSection from "@/components/ui/AnimatedSection";
+import { useQuoteStore } from "@/store/useQuoteStore";
 
 function ServiceCard({ title, description, image, subFeatures }) {
+  const setQuoteOpen = useQuoteStore((state) => state.setOpen);
   return (
     <motion.div
       whileHover={{ y: -5 }}
@@ -49,12 +51,12 @@ function ServiceCard({ title, description, image, subFeatures }) {
 
           {/* Actions */}
           <div className="flex flex-wrap items-center gap-6">
-            <Link
-              href="/contact"
+            <button
+              onClick={() => setQuoteOpen(true)}
               className="bg-brand-500 hover:bg-brand-600 text-dark font-bold text-xs uppercase tracking-widest px-8 h-12 rounded-full flex items-center transition-all duration-300 shadow-xl shadow-brand-500/20 cursor-pointer"
             >
               Get a Quote
-            </Link>
+            </button>
             <Link
               href="/contact"
               className="text-white/80 hover:text-white font-bold text-xs uppercase tracking-widest border-b border-white/20 hover:border-brand-500 transition-all duration-300 cursor-pointer"
