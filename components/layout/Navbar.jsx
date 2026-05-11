@@ -38,6 +38,7 @@ export default function Navbar() {
   }, [pathname]);
 
   const isAuthPage = pathname === "/login" || pathname === "/register";
+  const isAdminPage = pathname.startsWith("/admin");
 
   if (isAuthPage) {
     return (
@@ -98,26 +99,28 @@ export default function Navbar() {
             </Link>
 
             {/* Desktop Nav Links (Centered) */}
-            <nav className="hidden lg:flex items-center gap-8 absolute left-1/2 -translate-x-1/2">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className={`text-sm font-medium transition-colors duration-200 relative group ${pathname === link.href
-                    ? "text-brand-400"
-                    : "text-white/80 hover:text-white"
-                    }`}
-                >
-                  {link.label}
-                  <span
-                    className={`absolute -bottom-1 left-0 h-px bg-brand-400 transition-all duration-200 ${pathname === link.href
-                      ? "w-full"
-                      : "w-0 group-hover:w-full"
+            {!isAdminPage && (
+              <nav className="hidden lg:flex items-center gap-8 absolute left-1/2 -translate-x-1/2">
+                {navLinks.map((link) => (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    className={`text-sm font-medium transition-colors duration-200 relative group ${pathname === link.href
+                      ? "text-brand-400"
+                      : "text-white/80 hover:text-white"
                       }`}
-                  />
-                </Link>
-              ))}
-            </nav>
+                  >
+                    {link.label}
+                    <span
+                      className={`absolute -bottom-1 left-0 h-px bg-brand-400 transition-all duration-200 ${pathname === link.href
+                        ? "w-full"
+                        : "w-0 group-hover:w-full"
+                        }`}
+                    />
+                  </Link>
+                ))}
+              </nav>
+            )}
 
             {/* Desktop CTA (Right) */}
             <div className="hidden lg:flex items-center gap-4">
@@ -209,7 +212,7 @@ export default function Navbar() {
             className="fixed inset-x-0 top-16 z-40 bg-dark-card/95 backdrop-blur-xl border-b border-dark-border shadow-2xl lg:hidden"
           >
             <nav className="max-w-7xl mx-auto px-4 py-6 flex flex-col gap-1">
-              {navLinks.map((link, i) => (
+              {!isAdminPage && navLinks.map((link, i) => (
                 <motion.div
                   key={link.href}
                   initial={{ opacity: 0, x: -20 }}

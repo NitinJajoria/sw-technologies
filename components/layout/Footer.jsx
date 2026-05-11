@@ -15,10 +15,10 @@ const footerLinks = {
     { label: "Contact", href: "/contact" },
   ],
   Services: [
-    { label: "Web Design", href: "/services" },
-    { label: "Web Dev", href: "/services" },
-    { label: "E-Commerce", href: "/services" },
-    { label: "SEO & Marketing", href: "/services" },
+    { label: "Web Design", href: "/services#service-1" },
+    { label: "Web Dev", href: "/services#service-2" },
+    { label: "E-Commerce", href: "/services#service-3" },
+    { label: "SEO & Marketing", href: "/services#service-4" },
   ],
 };
 
@@ -40,7 +40,9 @@ export default function Footer() {
   const pathname = usePathname();
   const [email, setEmail] = useState("");
 
-  if (pathname === "/login" || pathname === "/register") return null;
+  const isAdminPage = pathname.startsWith("/admin");
+
+  if (pathname === "/login" || pathname === "/register" || isAdminPage) return null;
 
   const handleSubscribe = async (e) => {
     e.preventDefault();

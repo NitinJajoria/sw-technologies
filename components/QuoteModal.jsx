@@ -106,7 +106,7 @@ export default function QuoteModal() {
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 20 }}
           onClick={(e) => e.stopPropagation()}
-          className="bg-[#0f172a] border border-white/10 rounded-[24px] shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto relative"
+          className="bg-[#0f172a] border border-white/10 rounded-[24px] shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto relative scrollbar-hide"
           data-lenis-prevent
         >
           <button

@@ -187,7 +187,7 @@ const PageRevealer = ({
 
                 {/* Brand text - Positioned absolutely below the logo to keep logo centered */}
                 <motion.p
-                  className="absolute top-full -mt-20 font-display text-white font-bold text-3xl md:text-5xl tracking-[0.25em] uppercase m-0 leading-none select-none whitespace-nowrap"
+                  className="absolute top-full -mt-20 font-display text-white font-bold text-xl min-[426px]:text-3xl md:text-5xl tracking-[0.25em] uppercase m-0 leading-none select-none whitespace-nowrap"
                   initial={{ opacity: 0, y: 12 }}
                   animate={{
                     opacity: [0, 1, 1, 0],
@@ -201,7 +201,14 @@ const PageRevealer = ({
                   }}
                 >
                   <span className="bg-gradient-to-r from-brand-400 to-brand-600 bg-clip-text text-transparent">
-                    {revealText}
+                    {revealText === "SW Technologies" ? (
+                      <>
+                        <span className="hidden min-[426px]:inline">SW </span>
+                        <span>Technologies</span>
+                      </>
+                    ) : (
+                      revealText
+                    )}
                   </span>
                 </motion.p>
               </div>
