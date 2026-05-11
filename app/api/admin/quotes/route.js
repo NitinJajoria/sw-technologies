@@ -3,10 +3,26 @@ import { requireAdmin } from "@/middleware/adminMiddleware";
 import { connectDB } from "@/lib/db";
 import Quote from "@/models/Quote";
 
-export async function GET() {
+export async function GET(req) {
   const auth = await requireAdmin();
   if (auth instanceof NextResponse) return auth;
+
+  const { searchParams } = new URL(req.url);
+  const page = parseInt(searchParams.get("page")) || 1;
+  const limit = parseInt(searchParams.get("limit")) || 10;
+  const skip = (page - 1) * limit;
+
   await connectDB();
-  const quotes = await Quote.find({}).sort({ createdAt: -1 });
-  return NextResponse.json({ quotes });
+  const total = await Quote.countDocuments();
+  const quotes = await Quote.find({})
+    .sort({ createdAt: -1 })
+    .skip(skip)
+    .limit(limit);
+
+  return NextResponse.json({ 
+    quotes, 
+    total, 
+    page, 
+    totalPages: Math.ceil(total / limit) 
+  });
 }

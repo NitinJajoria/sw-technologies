@@ -1,4 +1,5 @@
 "use client";
+
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/store/useAuthStore";
@@ -6,7 +7,6 @@ import { motion } from "framer-motion";
 import { User, Mail, Shield, LogOut, Calendar } from "lucide-react";
 import Image from "next/image";
 import InternalPageBackground from "@/components/ui/InternalPageBackground";
-import PageRevealer from "@/components/ui/PageRevealer";
 
 export default function ProfilePage() {
   const { user, clearUser, loading } = useAuthStore();
@@ -34,7 +34,7 @@ export default function ProfilePage() {
   }
 
   return (
-    <PageRevealer>
+    <>
       <InternalPageBackground />
       <div className="min-h-screen pt-32 pb-20 px-4 relative">
         <div className="max-w-3xl mx-auto">
@@ -52,16 +52,16 @@ export default function ProfilePage() {
                 <div className="relative group">
                   <div className="absolute -inset-1 bg-gradient-to-r from-brand-400 to-brand-600 rounded-full blur opacity-40 group-hover:opacity-60 transition duration-500" />
                   <div className="relative w-32 h-32 rounded-full overflow-hidden border-2 border-white/10 bg-dark-card flex items-center justify-center">
-                     {user.avatar ? (
-                        <Image 
-                          src={user.avatar} 
-                          alt={user.name} 
-                          fill 
-                          className="object-cover"
-                        />
-                     ) : (
-                        <User size={48} className="text-white/20" />
-                     )}
+                    {user.avatar ? (
+                      <Image
+                        src={user.avatar}
+                        alt={user.name}
+                        fill
+                        className="object-cover"
+                      />
+                    ) : (
+                      <User size={48} className="text-white/20" />
+                    )}
                   </div>
                 </div>
 
@@ -77,12 +77,12 @@ export default function ProfilePage() {
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
-                <InfoCard 
+                <InfoCard
                   icon={<Shield size={20} className="text-brand-400" />}
                   label="Role"
                   value={user.role?.toUpperCase() || "USER"}
                 />
-                <InfoCard 
+                <InfoCard
                   icon={<Calendar size={20} className="text-brand-400" />}
                   label="Member Since"
                   value={user.createdAt ? new Date(user.createdAt).toLocaleDateString() : "N/A"}
@@ -102,7 +102,7 @@ export default function ProfilePage() {
           </motion.div>
         </div>
       </div>
-    </PageRevealer>
+    </>
   );
 }
 
